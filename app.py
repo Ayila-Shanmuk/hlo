@@ -51,8 +51,12 @@ except Exception as e:
 
 SEVERITY_LABELS = {0: "None", 1: "Minor", 2: "Moderate", 3: "Severe"}
 
-with open(os.path.join(DATA_DIR, "hospitals.json"), "r") as f:
-    HOSPITAL_DATA = json.load(f)
+try:
+    with open(os.path.join(DATA_DIR, "hospitals.json"), "r") as f:
+        HOSPITAL_DATA = json.load(f)
+except (OSError, ValueError) as e:
+    print(f"[!] Warning: could not load data/hospitals.json ({e}). Hospital lookups will be empty.")
+    HOSPITAL_DATA = {"hospitals": []}
 
 
 # ---------------------------------------------------------------------------
