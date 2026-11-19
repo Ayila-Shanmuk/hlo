@@ -43,6 +43,7 @@ def _secret_key():
     env = os.environ.get("SECRET_KEY")
     if env:
         return env
+    os.makedirs(DATA_DIR, exist_ok=True)
     if not os.path.exists(SECRET_FILE):
         with open(SECRET_FILE, "w") as f:
             f.write(secrets.token_hex(32))
@@ -65,6 +66,7 @@ def _load_users():
 
 
 def _save_users(users):
+    os.makedirs(DATA_DIR, exist_ok=True)
     tmp = USERS_FILE + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=2)
